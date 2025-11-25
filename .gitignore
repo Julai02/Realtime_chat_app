@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# OS specific
+Thumbs.db
+.AppleDouble
+
+# Ignore markdown documentation files (except PROJECT_DASHBOARD.md)
+README.md
+Week5-Assignment.md
+IMPLEMENTATION_SUMMARY.md
+COMPLETION_CHECKLIST.md
+FINAL_SUMMARY.md
+QUICK_START.md
+
+# Keep this file
+!PROJECT_DASHBOARD.md
