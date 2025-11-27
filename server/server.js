@@ -15,7 +15,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    // Allow CLIENT_URL (preferred) or ALLOWED_ORIGINS for compatibility
+    origin: process.env.CLIENT_URL || process.env.ALLOWED_ORIGINS || 'http://localhost:5173',
     methods: ['GET', 'POST'],
     credentials: true,
   },

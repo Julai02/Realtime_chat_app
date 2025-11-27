@@ -4,9 +4,17 @@ import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 
 // Socket.io connection URL
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+// Priority: VITE_SOCKET_URL (set in Vercel production) -> window.location.origin (if not localhost, i.e., client & server on same domain) -> localhost:5000 for local dev
+const SOCKET_URL =
+  import.meta.env.VITE_SOCKET_URL ||
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+    ? window.location.origin
+    : 'http://localhost:5000');
 
 // Create socket instance
+// NOTE: Prints the socket URL used for connections so it's easy to debug after build
+console.info('[Socket] Using SOCKET_URL =', SOCKET_URL);
+// For secure connection in production, ensure VITE_SOCKET_URL uses https://
 export const socket = io(SOCKET_URL, {
   autoConnect: false,
   reconnection: true,

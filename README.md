@@ -142,3 +142,29 @@ Open `http://localhost:5174` in your browser and start chatting!
 - [React Documentation](https://react.dev/)
 - [Express.js Documentation](https://expressjs.com/)
 - [Building a Chat Application with Socket.io](https://socket.io/get-started/chat)
+
+## ⚠️ Deployment Notes (Vercel client + Render backend)
+
+1. Set the Socket.io URL in the Vite build environment for the client (Vercel):
+  - Add the environment variable `VITE_SOCKET_URL` to your Vercel project settings and set it to your Render backend URL (for example: `https://your-backend.onrender.com`). This value is baked into the build and used by the `socket.js` client.
+
+  - If you prefer to use the CLI, you can run:
+
+  ```powershell
+  # production
+  vercel env add VITE_SOCKET_URL production
+  # preview
+  vercel env add VITE_SOCKET_URL preview
+  # development
+  vercel env add VITE_SOCKET_URL development
+  ```
+
+2. Configure your backend (Render) to allow connections from the Vercel domain:
+  - In Render's dashboard for your backend service, add the environment variable `CLIENT_URL` and set it to the domain your client is hosted on (for example: `https://your-client.vercel.app`). This service is used in `server.js` to set CORS for Socket.io.
+  - Alternatively, you can set `CLIENT_URL` to `*` temporarily while testing, but this is not recommended for production.
+
+3. Use HTTPS in production. Ensure that `VITE_SOCKET_URL` uses `https://` and that your Render backend is serving with TLS.
+
+4. Rebuild the client in Vercel after setting the environment variables. Because Vite inlines env variables at build-time, the client must be re-built for a new env var value to take effect.
+
+5. Verify connections by opening your client in the browser's developer tools and watching for socket.io requests in the Network tab. If you still see `localhost:5000` in requests after adding `VITE_SOCKET_URL`, clear any build caches and trigger a fresh build.
